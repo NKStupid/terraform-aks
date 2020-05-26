@@ -99,15 +99,15 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   }
 }
 
-# resource "helm_release" "ingress" {
-#     name      = "ingress"
-#     chart     = "stable/nginx-ingress"
+resource "helm_release" "ingress" {
+    name      = "ingress"
+    chart     = "stable/nginx-ingress"
 
-#     set {
-#         name  = "rbac.create"
-#         value = "true"
-#     }
-# }
+    set {
+        name  = "rbac.create"
+        value = "true"
+    }
+}
 
 output "kube_config" {
   value = "${azurerm_kubernetes_cluster.cluster.kube_config_raw}"
