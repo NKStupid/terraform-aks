@@ -40,7 +40,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   agent_pool_profile {
     name           = "aks"
     count          = "1"
-    vm_size        = "Standard_D1s_v3"
+    vm_size        = "Standard_D2s_v3"
     os_type        = "Linux"
     vnet_subnet_id = data.azurerm_subnet.example.id
   }
