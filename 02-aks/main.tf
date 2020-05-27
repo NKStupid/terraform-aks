@@ -11,58 +11,31 @@ variable "service_principal_client_secret" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "aks-cluster"
+  name     = "aks-exist"
   location = "japaneast"
 }
 
-resource "azurerm_network_security_group" "sg" {
-  name                = "aks-nsg"
-  location            = "${azurerm_resource_group.rg.location}"
-  resource_group_name = "${azurerm_resource_group.rg.name}"
-
-  security_rule {
-    name                       = "HTTPS"
-    priority                   = 1001
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "443"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-
-  security_rule {
-    name                       = "HTTP"
-    priority                   = 1002
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "80"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
+data "azurerm_resource_group" "example" {
+  name = "aks-csi"
 }
 
-resource "azurerm_virtual_network" "network" {
-  name                = "aks-vnet"
-  location            = "${azurerm_resource_group.rg.location}"
-  resource_group_name = "${azurerm_resource_group.rg.name}"
-  address_space       = ["10.1.0.0/16"]
+output "id" {
+  value = data.azurerm_resource_group.example.id
 }
 
-resource "azurerm_subnet" "subnet" {
-  name                      = "aks-subnet"
-  resource_group_name       = "${azurerm_resource_group.rg.name}"
-  network_security_group_id = "${azurerm_network_security_group.sg.id}"
-  address_prefix            = "10.1.0.0/24"
-  virtual_network_name      = "${azurerm_virtual_network.network.name}"
+data "azurerm_subnet" "example" {
+  name                 = "aks-subnet"
+  virtual_network_name = "aks-vnet"
+  resource_group_name  = azurerm_resource_group.example.name
+}
+
+output "subnet_id" {
+  value = data.azurerm_subnet.example.id
 }
 
 resource "azurerm_kubernetes_cluster" "cluster" {
   name       = "aks"
-  location   = "${azurerm_resource_group.rg.location}"
+  location   = azurerm_resource_group.example.location
   dns_prefix = "aks"
 
   resource_group_name = "${azurerm_resource_group.rg.name}"
@@ -71,9 +44,9 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   agent_pool_profile {
     name           = "aks"
     count          = "1"
-    vm_size        = "Standard_D2s_v3"
+    vm_size        = "Standard_D1s_v3"
     os_type        = "Linux"
-    vnet_subnet_id = "${azurerm_subnet.subnet.id}"
+    vnet_subnet_id = subnet_id
   }
 
   service_principal {
@@ -86,25 +59,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   }
 }
 
-output "kube_config" {
-  value = "${azurerm_kubernetes_cluster.cluster.kube_config_raw}"
-}
+# output "kube_config" {
+#   value = "${azurerm_kubernetes_cluster.cluster.kube_config_raw}"
+# }
 
-data "azurerm_api_management" "example" {
-  name                = "ni-dev01-je-2ndnw-api-001"
-  resource_group_name = "NRI-YHU-dev01"
-}
-
-output "api_management_id" {
-  value = data.azurerm_api_management.example.id
-}
-
-data "azurerm_subnet" "example" {
-  name                 = "aks-subnet"
-  virtual_network_name = "aks-vnet"
-  resource_group_name  = "aks-csi"
-}
-
-output "subnet_id" {
-  value = data.azurerm_subnet.example.id
-}
