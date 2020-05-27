@@ -89,3 +89,12 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 output "kube_config" {
   value = "${azurerm_kubernetes_cluster.cluster.kube_config_raw}"
 }
+
+data "azurerm_api_management" "example" {
+  name                = "ni-dev01-je-2ndnw-api-001"
+  resource_group_name = "NRI-YHU-dev01"
+}
+
+output "api_management_id" {
+  value = data.azurerm_api_management.example.id
+}
