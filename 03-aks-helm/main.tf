@@ -1,6 +1,6 @@
 provider "azurerm" {
   version = "=1.28"
-}
+}   
 
 provider "helm" {
   version = "~> 0.9"
