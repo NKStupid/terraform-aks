@@ -17,12 +17,12 @@ provider "helm" {
 
 variable "service_principal_client_id" {
   description = "The Client ID for the Service Principal"
-  default = "7534c854-5e5d-41b2-b39f-36ad76fd79e3"
+  default = "6ad6a105-a4d3-4f04-98a1-2024725fb44e"
 }
 
 variable "service_principal_client_secret" {
   description = "The Client Secret for the Service Principal"
-  default = "EX1o5mEfA8Y_lIZP2.Zi40_992bOQ67_Nx"
+  default = ".pfD~i4-R5po84mt1Ljr5Mb~~itwe81D-p"
 }
 
 resource "azurerm_resource_group" "rg" {
