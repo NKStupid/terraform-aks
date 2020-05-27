@@ -26,7 +26,7 @@ variable "service_principal_client_secret" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "aks-test"
+  name     = "aks-test2"
   location = "japaneast"
 }
 
