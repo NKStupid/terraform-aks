@@ -42,7 +42,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     count          = "1"
     vm_size        = "Standard_D1s_v3"
     os_type        = "Linux"
-    vnet_subnet_id = output.subnet_id
+    vnet_subnet_id = subnet_id
   }
 
   service_principal {
