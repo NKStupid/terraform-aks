@@ -98,3 +98,13 @@ data "azurerm_api_management" "example" {
 output "api_management_id" {
   value = data.azurerm_api_management.example.id
 }
+
+data "azurerm_subnet" "example" {
+  name                 = "aks-subnet"
+  virtual_network_name = "aks-vnet"
+  resource_group_name  = "aks-csi"
+}
+
+output "subnet_id" {
+  value = data.azurerm_subnet.example.id
+}
