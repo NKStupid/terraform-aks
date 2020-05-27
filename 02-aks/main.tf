@@ -12,7 +12,7 @@ variable "service_principal_client_secret" {
 
 resource "azurerm_resource_group" "rg" {
   name     = "aks-cluster"
-  location = "uksouth"
+  location = "japaneast"
 }
 
 resource "azurerm_network_security_group" "sg" {
@@ -66,7 +66,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   dns_prefix = "aks"
 
   resource_group_name = "${azurerm_resource_group.rg.name}"
-  kubernetes_version  = "1.12.6"
+  kubernetes_version  = "1.15.10"
 
   agent_pool_profile {
     name           = "aks"
