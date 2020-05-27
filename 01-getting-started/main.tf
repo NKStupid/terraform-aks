@@ -1,3 +1,7 @@
+provider "azurerm" {
+  version = "=1.28"
+}
+
 resource "azurerm_resource_group" "test" {
   name     = "LoadBalancerRG"
   location = "West US"
