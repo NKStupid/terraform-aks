@@ -17,10 +17,12 @@ provider "helm" {
 
 variable "service_principal_client_id" {
   description = "The Client ID for the Service Principal"
+  default = "7534c854-5e5d-41b2-b39f-36ad76fd79e3"
 }
 
 variable "service_principal_client_secret" {
   description = "The Client Secret for the Service Principal"
+  default = "EX1o5mEfA8Y_lIZP2.Zi40_992bOQ67_Nx"
 }
 
 resource "azurerm_resource_group" "rg" {
@@ -90,8 +92,8 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   }
 
   service_principal {
-    client_id     = "7534c854-5e5d-41b2-b39f-36ad76fd79e3"
-    client_secret = "EX1o5mEfA8Y_lIZP2.Zi40_992bOQ67_Nx"
+    client_id     = var.service_principal_client_id
+    client_secret = var.service_principal_client_secret
   }
 
   network_profile {
