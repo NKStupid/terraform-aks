@@ -1,2 +1,2 @@
-service_principal_client_id = "7534c854-5e5d-41b2-b39f-36ad76fd79e3"
-service_principal_client_secret = "EX1o5mEfA8Y_lIZP2.Zi40_992bOQ67_Nx"
+service_principal_client_id = "2bfd8261-930c-4804-a0ef-6a4f879a5e7b"
+service_principal_client_secret = "Q9Q_5~ZgKVj9TQt~AB41_8y.5J-Uhs-71v"
